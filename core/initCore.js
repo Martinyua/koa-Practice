@@ -1,7 +1,7 @@
 /*
  * @Author: Martin
  * @Date: 2020-11-14 16:26:16
- * @LastEditTime: 2020-11-14 16:45:24
+ * @LastEditTime: 2020-11-15 16:08:54
  * @FilePath: \koa-app\core\initCore.js
  */
 const Router = require('koa-router')
@@ -11,6 +11,7 @@ class InitManager {
     static initCore(app) {
         InitManager.app = app
         InitManager.initLoadRouter()
+        InitManager.loadConfig()
     }
 
     static initLoadRouter() {
@@ -22,6 +23,11 @@ class InitManager {
                 InitManager.app.use(obj.routes())
             }
         }
+    }
+    static loadConfig(path = '') {
+        const configPath = path || process.cwd() + '/config/config.js'
+        const config = require(configPath)
+        global.config = config
     }
 }
 
